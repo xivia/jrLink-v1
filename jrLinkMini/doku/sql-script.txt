@@ -1,0 +1,17 @@
+begin;
+
+create sequence seq_tstKey; -- start/increment: 1/1
+
+create table tTest (
+  tstKey    int8 default nextval('seq_tstKey'), -- let the db create keys (not the app)
+  tstValue  varchar(100),
+ 
+  constraint pk_tstKey PRIMARY KEY (tstKey)
+);
+
+grant ALL ON tTest TO jee_user;
+
+insert into tTest (tstValue) values ('value one');
+insert into tTest (tstValue) values ('value two');
+
+commit;
