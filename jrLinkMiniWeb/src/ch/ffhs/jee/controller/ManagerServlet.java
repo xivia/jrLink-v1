@@ -35,38 +35,58 @@ public class ManagerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// action
 		String action = request.getParameter("action");
 		if (action == null) action = "";
 		
+		// key
 		String keyString = request.getParameter("key");
 		if (keyString == null) keyString="0";
 		Long key = Long.parseLong(keyString);
 
-		Collection<TestTable> ejbResult = testBean.getList();
+		String urlList = "/list.jsp";
+		String urlForm = "/form.jsp";
 		
-		//for (TestTable elm : ejbResult) {
-		//	System.out.println(elm.getKey() + " - " + elm.getValue());
-		//}
-
+		ServletContext sc = getServletContext();
+	
+		
 		switch (action) {
 		case "new":
-			System.out.println("new");
+			
+			RequestDispatcher rdNew = sc.getRequestDispatcher(urlForm);
+			
+			request.setAttribute("entryKey", null);
+			request.setAttribute("entryValue", "");
+			request.setAttribute("nextAction", "create");
+			rdNew.forward(request, response);
+			
 			break;
+			
 		case "edit":
-			System.out.println("edit " + key);
+			
+			RequestDispatcher rdEdit = sc.getRequestDispatcher(urlForm);
+			
+			request.setAttribute("entryKey", testBean.getByKey(key).getKey());
+			request.setAttribute("entryValue", testBean.getByKey(key).getValue());
+			request.setAttribute("nextAction", "update");
+			rdEdit.forward(request, response);
+			
 			break;
+			
 		case "delete":
+			
 			System.out.println("delete " + key);
+			
 			break;
 
 		default:
-		
-			String url = "/list.jsp";
-			ServletContext sc = getServletContext();
-			RequestDispatcher rd = sc.getRequestDispatcher(url);
+			
+			Collection<TestTable> ejbResult = testBean.getList();
+			
+			RequestDispatcher rdDefault = sc.getRequestDispatcher(urlList);
 			
 			request.setAttribute("resultList", ejbResult);
-			rd.forward(request, response);
+			rdDefault.forward(request, response);
 			
 			break;
 		}		
