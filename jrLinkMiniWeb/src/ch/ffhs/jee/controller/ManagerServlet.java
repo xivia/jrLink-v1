@@ -44,11 +44,10 @@ public class ManagerServlet extends HttpServlet {
 		if (keyString == null) keyString="0";
 		Long key = Long.parseLong(keyString);
 
+		// redirect
 		String urlList = "/list.jsp";
 		String urlForm = "/form.jsp";
-		
 		ServletContext sc = getServletContext();
-	
 		
 		switch (action) {
 		case "new":
@@ -75,12 +74,14 @@ public class ManagerServlet extends HttpServlet {
 			
 		case "delete":
 			
-			System.out.println("delete " + key);
+			testBean.delete(key);
 			
-			break;
+			// fall through -> fill list
+			//break;
 
 		default:
 			
+			//fill list
 			Collection<TestTable> ejbResult = testBean.getList();
 			
 			RequestDispatcher rdDefault = sc.getRequestDispatcher(urlList);
@@ -97,6 +98,27 @@ public class ManagerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-	}
+		request.setCharacterEncoding("UTF-8");
+		
+		// action
+		String action = request.getParameter("action");
 
+		switch (action) {
+		case "create":			
+			
+			testBean.create(request.getParameter("inpValue"));
+			
+			break;
+			
+		case "update":
+			
+			testBean.update(Long.parseLong(request.getParameter("inpKey")), request.getParameter("inpValue"));
+			
+			break;
+			
+		}
+
+		// goto list
+		doGet(request, response);
+	}
 }
