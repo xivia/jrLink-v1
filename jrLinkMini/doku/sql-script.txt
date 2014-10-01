@@ -10,6 +10,7 @@ create table tTest (
 );
 
 grant ALL ON tTest TO jee_user;
+grant ALL ON seq_tstKey TO jee_user;
 
 insert into tTest (tstValue) values ('value one');
 insert into tTest (tstValue) values ('value two');
