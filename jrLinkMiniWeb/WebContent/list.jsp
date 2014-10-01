@@ -12,15 +12,24 @@
 	
 	<table>
 	<tr>
-		<td>key</td><td>&nbsp;</td>
-		<td>value</td><td>&nbsp;</td>
+		<td colspan="4"><a href="manage?action=new">new</a></td>
+		<td colspan="3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td>key</td>
+		<td>&nbsp;</td>
+		<td>value</td>
+		<td>&nbsp;</td>
 		<td colspan="3">action</td></tr>
 	<c:forEach var="item" items="${resultList}">
   		<tr>
- 	 		<td>${item.key}</td><td>&nbsp;</td>
-  			<td>${item.value}<td>&nbsp;</td></td>
-  			<td>edit</td><td>&nbsp;</td>
-  			<td>delete</td>
+ 	 		<td>${item.key}</td>
+ 	 		<td>&nbsp;</td>
+  			<td>${item.value}</td>
+  			<td>&nbsp;</td>
+  			<td><a href="manage?action=edit&key=${item.key}">edit</a></td>
+  			<td>&nbsp;</td>
+  			<td><a href="manage?action=delete&key=${item.key}">delete</a></td>
   		</tr>
 	</c:forEach>
 	</table>

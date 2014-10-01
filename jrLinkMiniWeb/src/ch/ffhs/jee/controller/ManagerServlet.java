@@ -35,18 +35,41 @@ public class ManagerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String action = request.getParameter("action");
+		if (action == null) action = "";
+		
+		String keyString = request.getParameter("key");
+		if (keyString == null) keyString="0";
+		Long key = Long.parseLong(keyString);
+
 		Collection<TestTable> ejbResult = testBean.getList();
 		
-		for (TestTable elm : ejbResult) {
-			System.out.println(elm.getKey() + " - " + elm.getValue());
-		}
+		//for (TestTable elm : ejbResult) {
+		//	System.out.println(elm.getKey() + " - " + elm.getValue());
+		//}
+
+		switch (action) {
+		case "new":
+			System.out.println("new");
+			break;
+		case "edit":
+			System.out.println("edit");
+			break;
+		case "delete":
+			System.out.println("delete");
+			break;
+
+		default:
 		
-		String url = "/list.jsp";
-		ServletContext sc = getServletContext();
-		RequestDispatcher rd = sc.getRequestDispatcher(url);
-		
-		request.setAttribute("resultList", ejbResult);
-		rd.forward(request, response);
+			String url = "/list.jsp";
+			ServletContext sc = getServletContext();
+			RequestDispatcher rd = sc.getRequestDispatcher(url);
+			
+			request.setAttribute("resultList", ejbResult);
+			rd.forward(request, response);
+			
+			break;
+		}		
 	}
 
 	/**
