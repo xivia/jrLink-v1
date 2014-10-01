@@ -32,4 +32,27 @@ public class TestBean implements TestBeanLocal {
 		return em.find(TestTable.class, new Long(key));
 	}
 
+	@Override
+	public void create(String value) {
+		TestTable tt = new TestTable();
+		tt.setValue(value);
+		em.persist(tt);
+		em.flush();
+	}
+
+	@Override
+	public void update(Long key, String value) {
+		TestTable tt = getByKey(key);
+		tt.setValue(value);
+		em.merge(tt);
+		em.flush();
+	}
+
+	@Override
+	public void delete(Long key) {
+		TestTable tt = getByKey(key);
+		if (tt != null) em.remove(tt);
+		em.flush();
+	}
+
 }

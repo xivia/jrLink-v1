@@ -19,4 +19,20 @@ public interface TestBeanLocal {
 	 */
 	TestTable getByKey(Long key);
 
+	/**
+	 * add record
+	 */
+	void create(String value);
+	
+	/**
+	 * update record
+	 */
+	void update(Long key, String value);
+	
+	/**
+	 * delete record
+	 */
+	void delete(Long key);
+	
+	
 }
