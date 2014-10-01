@@ -12,7 +12,7 @@
 	
 	<table>
 	<tr>
-		<td colspan="4"><a href="manage?action=new">new</a></td>
+		<td colspan="4"><a href="manage?action=new">new</a> record</td>
 		<td colspan="3">&nbsp;</td>
 	</tr>
 	<tr>

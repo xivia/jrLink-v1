@@ -53,10 +53,10 @@ public class ManagerServlet extends HttpServlet {
 			System.out.println("new");
 			break;
 		case "edit":
-			System.out.println("edit");
+			System.out.println("edit " + key);
 			break;
 		case "delete":
-			System.out.println("delete");
+			System.out.println("delete " + key);
 			break;
 
 		default:
