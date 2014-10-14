@@ -26,8 +26,4 @@ add a jdbc-datasource
     Username: jee_user
     Password: 123
 
-tab connection
---> use JTA ???
---> use CCM ???
-
 enable the datasource
