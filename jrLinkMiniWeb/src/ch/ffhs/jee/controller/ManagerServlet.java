@@ -19,7 +19,11 @@ import ch.ffhs.jee.model.TestTable;
 @WebServlet("/manage")
 public class ManagerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-     
+    
+	//redirect urls
+	private static final String urlList = "/list.jsp";
+	private static final String urlForm = "/form.jsp";
+	
 	@EJB
 	private TestBeanLocal testBean;
 	
@@ -40,13 +44,8 @@ public class ManagerServlet extends HttpServlet {
 		if (action == null) action = "";
 		
 		// key
-		String keyString = request.getParameter("key");
-		if (keyString == null) keyString="0";
-		Long key = Long.parseLong(keyString);
+		String key = request.getParameter("key");
 
-		// redirect
-		String urlList = "/list.jsp";
-		String urlForm = "/form.jsp";
 		ServletContext sc = getServletContext();
 		
 		switch (action) {
@@ -103,22 +102,39 @@ public class ManagerServlet extends HttpServlet {
 		// action
 		String action = request.getParameter("action");
 
+		ServletContext sc = getServletContext();
+		
 		switch (action) {
 		case "create":			
 			
-			testBean.create(request.getParameter("inpValue"));
+			boolean result = testBean.create(request.getParameter("inpKey"), request.getParameter("inpValue"));
+			
+			if (result == false) {
+				request.setAttribute("duplicate_key", request.getParameter("inpKey"));
+				
+				RequestDispatcher rdNew = sc.getRequestDispatcher(urlForm);
+				
+				request.setAttribute("entryKey", null);
+				request.setAttribute("entryValue", request.getParameter("inpValue"));
+				request.setAttribute("nextAction", "create");
+				rdNew.forward(request, response);
+			} else {
+				// goto list
+				doGet(request, response);
+			}
 			
 			break;
 			
 		case "update":
 			
-			testBean.update(Long.parseLong(request.getParameter("inpKey")), request.getParameter("inpValue"));
+			testBean.update(request.getParameter("inpKey"), request.getParameter("inpValue"));
+			
+			// goto list
+			doGet(request, response);
 			
 			break;
 			
 		}
-
-		// goto list
-		doGet(request, response);
 	}
+
 }

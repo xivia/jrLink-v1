@@ -15,10 +15,8 @@ public class TestTable implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id 
-	@Column(name="tstkey")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_tstKey")
-    @SequenceGenerator(name="seq_tstKey", sequenceName="seq_tstKey", allocationSize=1)
-	private Long key;
+	@Column(name="tstProp")
+	private String key;
 
 	@Column(name="tstValue") 
 	private String value;
@@ -26,10 +24,14 @@ public class TestTable implements Serializable {
 	public TestTable() {
 	}
 
-	public Long getKey() {
+	public String getKey() {
 		return this.key;
 	}
 
+	public void setKey(String key) {
+		this.key = key;
+	}
+	
 	public String getValue() {
 		return this.value;
 	}

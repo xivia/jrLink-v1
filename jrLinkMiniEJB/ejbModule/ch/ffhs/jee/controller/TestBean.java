@@ -28,20 +28,26 @@ public class TestBean implements TestBeanLocal {
 	}
 
 	@Override
-	public TestTable getByKey(Long key) {
-		return em.find(TestTable.class, new Long(key));
+	public TestTable getByKey(String key) {
+		return em.find(TestTable.class, new String(key));
 	}
 
 	@Override
-	public void create(String value) {
-		TestTable tt = new TestTable();
-		tt.setValue(value);
-		em.persist(tt);
-		em.flush();
+	public boolean create(String key, String value) {
+		if (getByKey(key) == null) {
+			TestTable tt = new TestTable();
+			tt.setKey(key);
+			tt.setValue(value);
+			em.persist(tt);
+			em.flush();
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
-	public void update(Long key, String value) {
+	public void update(String key, String value) {
 		TestTable tt = getByKey(key);
 		tt.setValue(value);
 		em.merge(tt);
@@ -49,7 +55,7 @@ public class TestBean implements TestBeanLocal {
 	}
 
 	@Override
-	public void delete(Long key) {
+	public void delete(String key) {
 		TestTable tt = getByKey(key);
 		if (tt != null) em.remove(tt);
 		em.flush();

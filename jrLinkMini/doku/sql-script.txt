@@ -1,18 +1,15 @@
 begin;
 
-create sequence seq_tstKey; -- start/increment: 1/1
-
 create table tTest (
-  tstKey    int8 default nextval('seq_tstKey'),
+  tstProp   varchar(50),
   tstValue  varchar(100),
- 
-  constraint pk_tstKey PRIMARY KEY (tstKey)
+
+  constraint pk_tstKey PRIMARY KEY (tstProp)
 );
 
 grant ALL ON tTest TO jee_user;
-grant ALL ON seq_tstKey TO jee_user;
 
-insert into tTest (tstValue) values ('value one');
-insert into tTest (tstValue) values ('value two');
+insert into tTest (tstProp, tstValue) values ('p1', 'value one');
+insert into tTest (tstProp, tstValue) values ('p2', 'value two');
 
 commit;

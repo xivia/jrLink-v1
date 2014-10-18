@@ -17,22 +17,22 @@ public interface TestBeanLocal {
 	/**
 	 * get one record by key
 	 */
-	TestTable getByKey(Long key);
+	TestTable getByKey(String key);
 
 	/**
 	 * add record
 	 */
-	void create(String value);
+	boolean create(String key, String value);
 	
 	/**
 	 * update record
 	 */
-	void update(Long key, String value);
+	void update(String key, String value);
 	
 	/**
 	 * delete record
 	 */
-	void delete(Long key);
+	void delete(String key);
 	
 	
 }
